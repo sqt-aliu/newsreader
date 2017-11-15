@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -97,6 +98,77 @@ namespace NewsReader
             set
             {
                 _newsTable = value;
+            }
+        }
+
+        private void Export_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.FileName = String.Format("{0}-{1}.csv", DateTime.Today.ToString("yyyy-MM-dd"), this.Parent.Text);
+                sfd.Filter = "Csv files (*.csv)|*.csv";
+                sfd.OverwritePrompt = true;
+                if (sfd.ShowDialog(this) == DialogResult.OK)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    IEnumerable<string> columnNames = DataSource.Columns.Cast<DataColumn>().Select(column => column.ColumnName);
+                    sb.AppendLine(string.Join(@""",""", columnNames));
+                    foreach (DataRow row in DataSource.Rows)
+                    {
+                        IEnumerable<string> fields = row.ItemArray.Select(field => field.ToString());
+                        sb.AppendLine("\"" + string.Join(@""",""", fields) + "\"");
+                    }
+
+                    File.WriteAllText(sfd.FileName, sb.ToString());
+                    System.Diagnostics.Process.Start(sfd.FileName);
+
+                }
+            }
+        }
+
+        private void ExportHtml_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.FileName = String.Format("{0}-{1}.html", DateTime.Today.ToString("yyyy-MM-dd"), this.Parent.Text);
+                sfd.Filter = "Excel files (*.html)|*.html";
+                sfd.OverwritePrompt = true;
+                if (sfd.ShowDialog(this) == DialogResult.OK)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine("<html>");
+                    sb.AppendLine("<head>");
+                    sb.AppendLine("<style type='text/css'>");
+                    sb.AppendLine("html * { font-family: Tahoma, serif; font-size:8pt; }");
+                    sb.AppendLine("table { border: 1px solid #666666; }");
+                    sb.AppendLine("</style>");
+                    sb.AppendLine("</head>");
+                    sb.AppendLine("<body>");
+
+                    sb.AppendLine("<table>");
+                    sb.AppendLine("<tr>");
+                    sb.Append("<td>Ticker</td>");
+                    sb.Append("<td>Title</td>");
+                    sb.Append("<td>Published</td>");
+                    sb.AppendLine("</tr>");
+
+                    foreach (DataRow row in DataSource.Rows)
+                    {
+                        sb.AppendLine("<tr>");
+                        sb.AppendFormat("<td>{0}</td>", row["Ticker"]);
+                        sb.AppendFormat("<td><a href='{0}'>{1}</a></td>", row["Url"], row["Title"]);
+                        sb.AppendFormat("<td>{0}</td>", row["Published"]);
+                        sb.AppendLine("</tr>");
+                    }
+
+                    sb.AppendLine("</table>");
+
+                    sb.AppendLine("</body>");
+                    sb.AppendLine("</html>");
+                    File.WriteAllText(sfd.FileName, sb.ToString());
+                    System.Diagnostics.Process.Start(sfd.FileName);
+
+                }
             }
         }
     }

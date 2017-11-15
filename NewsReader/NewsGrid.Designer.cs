@@ -28,11 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gridNews = new System.Windows.Forms.DataGridView();
+            this.menuStripNews = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.csvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.htmlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.gridNews)).BeginInit();
+            this.menuStripNews.SuspendLayout();
             this.SuspendLayout();
             // 
             // gridNews
@@ -54,6 +60,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.gridNews.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.gridNews.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridNews.ContextMenuStrip = this.menuStripNews;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -73,6 +80,37 @@
             this.gridNews.TabIndex = 0;
             this.gridNews.VirtualMode = true;
             // 
+            // menuStripNews
+            // 
+            this.menuStripNews.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportToolStripMenuItem});
+            this.menuStripNews.Name = "menuStripNews";
+            this.menuStripNews.Size = new System.Drawing.Size(153, 48);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.csvToolStripMenuItem,
+            this.htmlToolStripMenuItem});
+            this.exportToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // csvToolStripMenuItem
+            // 
+            this.csvToolStripMenuItem.Name = "csvToolStripMenuItem";
+            this.csvToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.csvToolStripMenuItem.Text = "Csv";
+            this.csvToolStripMenuItem.Click += new System.EventHandler(this.Export_Click);
+            // 
+            // htmlToolStripMenuItem
+            // 
+            this.htmlToolStripMenuItem.Name = "htmlToolStripMenuItem";
+            this.htmlToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.htmlToolStripMenuItem.Text = "Html";
+            this.htmlToolStripMenuItem.Click += new System.EventHandler(this.ExportHtml_Click);
+            // 
             // NewsGrid
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -81,6 +119,7 @@
             this.Name = "NewsGrid";
             this.Size = new System.Drawing.Size(1017, 665);
             ((System.ComponentModel.ISupportInitialize)(this.gridNews)).EndInit();
+            this.menuStripNews.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -88,5 +127,9 @@
         #endregion
 
         private System.Windows.Forms.DataGridView gridNews;
+        private System.Windows.Forms.ContextMenuStrip menuStripNews;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem csvToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem htmlToolStripMenuItem;
     }
 }
